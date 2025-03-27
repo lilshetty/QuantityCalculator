@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Quantity Calculator</title>
+  <title>Stock Quantity Calculator (India)</title>
   <style>
-    /* Global Styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -15,110 +14,89 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       height: 100vh;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
+      background: #f4f4f4;
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: fadeIn 1.5s ease-in-out;
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.85);
-      box-shadow: 0 0 20px #00ffcc, 0 0 40px #00c6ff;
-      border-radius: 15px;
-      padding: 50px;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 40px;
       width: 90%;
-      max-width: 600px;
+      max-width: 550px;
       text-align: center;
-      transition: transform 0.5s ease;
+      transition: 0.3s;
     }
 
     .container:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px #00ffcc, 0 0 60px #00c6ff;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 20px;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00c6ff;
-      animation: neonGlow 1.5s infinite alternate;
+      font-size: 32px;
+      color: #0275d8;
+      margin-bottom: 25px;
     }
 
     label {
       display: block;
-      font-size: 20px;
-      margin: 20px 0 10px;
-      color: #00c6ff;
+      font-size: 18px;
+      margin: 15px 0 5px;
+      color: #555;
     }
 
     input {
       width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
       border-radius: 8px;
       outline: none;
-      background: #1e1e1e;
-      color: #00ffcc;
-      transition: box-shadow 0.3s;
+      transition: border 0.3s;
     }
 
     input:focus {
-      box-shadow: 0 0 10px #00c6ff;
+      border: 1px solid #0275d8;
     }
 
     button {
-      margin-top: 25px;
-      padding: 15px 40px;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: #0275d8;
       color: #fff;
-      font-size: 20px;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
+      transition: 0.3s;
     }
 
     button:hover {
-      background: linear-gradient(135deg, #0072ff, #00ffcc);
-      transform: translateY(-8px);
-      box-shadow: 0 0 15px #00ffcc;
+      background: #025aa5;
     }
 
     #result {
       margin-top: 30px;
-      font-size: 36px;
+      font-size: 26px;
+      color: #28a745;
       font-weight: bold;
-      color: #00ffcc;
-      text-shadow: 0 0 15px #00c6ff;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes neonGlow {
-      0% { text-shadow: 0 0 15px #00ffcc; }
-      100% { text-shadow: 0 0 30px #00c6ff; }
     }
 
     @media (max-width: 768px) {
       .container {
-        padding: 30px;
+        padding: 25px;
       }
 
       h1 {
-        font-size: 32px;
+        font-size: 28px;
       }
 
       input, button {
         font-size: 16px;
-        padding: 12px;
       }
     }
   </style>
@@ -126,19 +104,19 @@
 <body>
 
 <div class="container">
-  <h1>🔥 Stock Quantity Calculator 🔥</h1>
+  <h1>Stock Quantity Calculator (₹)</h1>
 
-  <label>Risk Per Day ($)</label>
-  <input type="number" id="risk" placeholder="Enter risk amount" required>
+  <label>Risk Per Day (₹)</label>
+  <input type="number" id="risk" placeholder="Enter daily risk" required>
 
-  <label>Entry Price ($)</label>
+  <label>Entry Price (₹)</label>
   <input type="number" id="entry" placeholder="Enter entry price" required>
 
-  <label>Stop Loss Price ($)</label>
+  <label>Stop Loss (₹)</label>
   <input type="number" id="stopLoss" placeholder="Enter stop loss price" required>
 
   <button onclick="calculateQuantity()">Calculate</button>
-  
+
   <div id="result"></div>
 </div>
 
@@ -150,12 +128,15 @@
 
     const resultDiv = document.getElementById("result");
 
-    if (risk > 0 && entry > stopLoss) {
-      const quantity = risk / (entry - stopLoss);
-      resultDiv.innerHTML = 💡 Quantity: <span>${Math.floor(quantity)}</span> shares;
-    } else {
-      resultDiv.innerHTML = "⚠ Invalid input. Ensure entry > stop loss and risk > 0.";
+    if (!risk || !entry || !stopLoss || entry <= stopLoss) {
+      resultDiv.innerHTML = "⚠️ Invalid input. Ensure entry > stop loss and valid values.";
+      resultDiv.style.color = "#dc3545";  // Red color for error
+      return;
     }
+
+    const quantity = risk / (entry - stopLoss);
+    resultDiv.innerHTML = `✅ Quantity: ₹${Math.floor(quantity)} shares`;
+    resultDiv.style.color = "#28a745";  // Green color for valid result
   }
 </script>
 
