@@ -3,103 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Quantity Calculator (India)</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      background: #f4f4f4;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      background: #fff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      padding: 40px;
-      width: 90%;
-      max-width: 550px;
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .container:hover {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    h1 {
-      font-size: 32px;
-      color: #0275d8;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      font-size: 18px;
-      margin: 15px 0 5px;
-      color: #555;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      transition: border 0.3s;
-    }
-
-    input:focus {
-      border: 1px solid #0275d8;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      background: #0275d8;
-      color: #fff;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #025aa5;
-    }
-
-    #result {
-      margin-top: 30px;
-      font-size: 26px;
-      color: #28a745;
-      font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 25px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      input, button {
-        font-size: 16px;
-      }
-    }
-  </style>
+  <title>Stock Quantity Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
 
@@ -120,23 +27,11 @@
   <div id="result"></div>
 </div>
 
+<script src="script.js"></script>
 <script>
-  function calculateQuantity() {
-    const risk = parseFloat(document.getElementById("risk").value);
-    const entry = parseFloat(document.getElementById("entry").value);
-    const stopLoss = parseFloat(document.getElementById("stopLoss").value);
-
-    const resultDiv = document.getElementById("result");
-
-    if (!risk || !entry || !stopLoss || entry <= stopLoss) {
-      resultDiv.innerHTML = "⚠️ Invalid input. Ensure entry > stop loss and valid values.";
-      resultDiv.style.color = "#dc3545";  // Red color for error
-      return;
-    }
-
-    const quantity = risk / (entry - stopLoss);
-    resultDiv.innerHTML = `✅ Quantity: ₹${Math.floor(quantity)} shares`;
-    resultDiv.style.color = "#28a745";  // Green color for valid result
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'));
   }
 </script>
 
